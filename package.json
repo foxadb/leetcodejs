@@ -1,0 +1,15 @@
+{
+  "name": "leetcodejs",
+  "version": "1.0.0",
+  "description": "Leetcode challenges solutions in JavaScript",
+  "main": "index.js",
+  "author": "Samy Amraoui",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
