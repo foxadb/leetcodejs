@@ -21,29 +21,26 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function (s) {
-    let longestLength = 0;
+    let start = 0, maxLength = 0;
+    const map = new Map();
 
-    for (let i = 0; i < s.length; ++i) {
-        // Init counter variables
-        let currentLength = 0;
-        let alreadyIn = [];
+    for (let i = 0; i < s.length; i++) {
+        // Current character
+        const char = s.charAt(i);
 
-        for (let j = i; j < s.length; ++j) {
-            const currentChar = s.charAt(j);
-
-            // Exit loop if char already included
-            if (alreadyIn.includes(currentChar)) {
-                break;
-            } else {
-                ++currentLength;
-                alreadyIn.push(currentChar);
-            }
+        // Update start of the substring
+        if (map.get(char) >= start) {
+            start = map.get(char) + 1;
         }
-        // Compute new longest length
-        longestLength = Math.max(longestLength, currentLength);
+
+        // Set last know position of current character
+        map.set(char, i);
+
+        // Compute max substring length
+        maxLength = Math.max(maxLength, i - start + 1);
     }
 
-    return longestLength;
+    return maxLength;
 };
 
 module.exports = { lengthOfLongestSubstring };
