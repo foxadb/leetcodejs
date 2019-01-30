@@ -1,9 +1,12 @@
 {
   "name": "leetcodejs",
   "version": "1.0.0",
-  "description": "Leetcode challenges solutions in JavaScript",
-  "main": "index.js",
+  "description": "LeetCode problems solved in JavaScript",
   "author": "Samy Amraoui",
+  "repository": {
+    "type": "git",
+    "url": "github.com/foxadb/leetcodejs"
+  },
   "license": "MIT",
   "scripts": {
     "test": "mocha"
