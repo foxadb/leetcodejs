@@ -23,28 +23,36 @@
  * @return {number}
  */
 var findMedianSortedArrays = function (nums1, nums2) {
-    let nums = [];
-    let index1 = 0;
-    let index2 = 0;
-    while (index1 < nums1.length && index2 < nums2.length) {
-        if (nums1[index1] < nums2[index2]) {
-            nums.push(nums1[index1++]);
+    if (nums1.length > nums2.length) {
+        return findMedianSortedArrays(nums2, nums1);
+    }
+
+    const n = nums1.length + nums2.length;
+    let start = 0, end = nums1.length;
+
+    while (start <= end) {
+        // Partition first array
+        const i = parseInt((start + end) / 2);
+        const maxLeft1 = i === 0 ? Number.MIN_SAFE_INTEGER : nums1[i - 1];
+        const minRight1 = i === nums1.length ? Number.MAX_SAFE_INTEGER : nums1[i];
+        
+        // Partition second array
+        const j = parseInt((n + 1) / 2) - i;
+        const maxLeft2 = j === 0 ? Number.MIN_SAFE_INTEGER : nums2[j - 1];
+        const minRight2 = j === nums2.length ? Number.MAX_SAFE_INTEGER : nums2[j];
+
+        // Compare elements at the partitions centers
+        if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
+            if (n % 2) {
+                return Math.max(maxLeft1, maxLeft2);
+            } else {
+                return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2;
+            }
+        } else if (maxLeft1 > minRight2) {
+            end = i - 1;
         } else {
-            nums.push(nums2[index2++]);
+            start = i + 1;
         }
-    }
-
-    if (index1 < nums1.length) {
-        nums = nums.concat(nums1.slice(index1));
-    } else if (index2 < nums2.length) {
-        nums = nums.concat(nums2.slice(index2));
-    }
-
-    const medianIndex = parseInt((nums.length - 1) / 2);
-    if (nums.length % 2 === 1) {
-        return nums[medianIndex];
-    } else {
-        return (nums[medianIndex] + nums[medianIndex + 1]) / 2;
     }
 };
 
