@@ -1,5 +1,6 @@
 /**
  * 5. Longest Palindromic Substring
+ * 
  * Given a string s, find the longest palindromic substring in s.
  * You may assume that the maximum length of s is 1000.
  * 
@@ -20,23 +21,41 @@
 var longestPalindrome = function (s) {
     let maxSub = '';
 
-    // Reverse the string
-    const r = s.split('').reverse().join('');
-
-    // Search for common substrings
-    const n = s.length;
-    for (let i = 0; i < n; ++i) {
-        for (let j = i; j < n; ++j) {
-            const subS = s.slice(i, j + 1);
-            const subR = r.slice(n - j - 1, n - i);
-
-            if (subS === subR && maxSub.length < subS.length) {
-                maxSub = subS;
-            }
+    for (let i = 0; i < s.length; ++i) {
+        // One character center palindrome
+        const oddSub = expandSubstring(s, i, i);
+        if (oddSub.length > maxSub.length) {
+            maxSub = oddSub;
         }
-    } 
+
+        // Two characters center palindrome
+        const evenSub = expandSubstring(s, i, i + 1);
+        if (evenSub.length > maxSub.length) {
+            maxSub = evenSub;
+        }
+    }
 
     return maxSub;
+};
+
+/**
+ * Find the longest palindrome substring by expanding from start and end indexes
+ * @param {string} s 
+ * @param {number} start 
+ * @param {number} end 
+ */
+var expandSubstring = (s, start, end) => {
+    while (
+        // Don't expand outside of the source string
+        start >= 0 && end < s.length
+        // Palindrome condition
+        && s.charAt(start) === s.charAt(end)
+    ) {
+        // Expand start and end indexes
+        --start;
+        ++end;
+    }
+    return s.slice(start + 1, end);
 };
 
 module.exports = { longestPalindrome };
