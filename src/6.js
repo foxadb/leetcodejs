@@ -33,21 +33,18 @@
  * @return {string}
 */
 var convert = function (s, numRows) {
-    const n = s.length;
-    let result = '';
-
-    for (let i = 0; i < numRows; ++i) {
-        for (let j = i; j < n; j += 2 * numRows - 2) {
-            result += s[j];
-            
-            const innerPos = j + 2 * (numRows - 1 - i); 
-            if (i !== 0 && i !== numRows - 1 && innerPos < n) {
-                result += s[innerPos];
-            }
-        }
+    if (numRows === 1) {
+        return s;
     }
 
-    return result;
+    const zigzagArr = Array(numRows).fill('');
+    for (let i = 0; i < s.length; i++) {
+        const j = i % (2 * numRows - 2);
+        const row = j < numRows ? j : 2 * numRows - 2 - j;
+        zigzagArr[row] += s.charAt(i);
+    }
+
+    return zigzagArr.join('');
 };
 
 module.exports = { convert };
