@@ -20,12 +20,17 @@
 */
 var maxArea = function (height) {
     let maxFoundArea = 0;
-    for (let i = 0; i < height.length; i++) {
-        for (let j = i + 1; j < height.length; j++) {
-            const currentArea = (j - i) * Math.min(height[i], height[j]);
-            if (currentArea > maxFoundArea) {
-                maxFoundArea = currentArea;
-            }
+    let left = 0;
+    let right = height.length - 1;
+    while (left < right) {
+        const area = (right - left) * Math.min(height[left], height[right]);
+        if (maxFoundArea < area) {
+            maxFoundArea = area;
+        }
+        if (height[left] < height[right]) {
+            left++;
+        } else {
+            right--;
         }
     }
     return maxFoundArea;
