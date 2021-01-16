@@ -1,16 +1,16 @@
 /**
  * 7. Reverse Integer
- * 
+ *
  * Given a 32-bit signed integer, reverse digits of an integer.
- * 
+ *
  * Example 1:
  * Input: 123
  * Output: 321
- * 
+ *
  * Example 2:
  * Input: -123
  * Output: -321
- * 
+ *
  * Example 3:
  * Input: 120
  * Output: 21
@@ -31,7 +31,7 @@ var reverse = function (x) {
 
     if (res.toString(2).length > 31) return 0;
 
-    return x > 0 ? res : -res;
+    return x >= 0 ? res : -res;
 };
 
 module.exports = { reverse };
