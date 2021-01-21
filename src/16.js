@@ -19,15 +19,23 @@
 var threeSumClosest = function (nums, target) {
     let closest = null;
     let closestDist = null;
-    for (let i = 0; i < nums.length - 2; i++) {
-        for (let j = i + 1; j < nums.length - 1; j++) {
-            for (let k = j + 1; k < nums.length; k++) {
-                const sum = nums[i] + nums[j] + nums[k];
-                const sumDist = Math.abs(sum - target);
-                if (closestDist === null || sumDist < closestDist) {
-                    closest = sum;
-                    closestDist = sumDist;
-                }
+    const sortedNums = [...nums].sort((a, b) => a - b);
+    for (let i = 0; i < nums.length - 2 && closest !== target; i++) {
+        let l = i + 1;
+        let r = nums.length - 1;
+        while (l < r) {
+            const sum = sortedNums[i] + sortedNums[l] + sortedNums[r];
+            const sumDist = Math.abs(sum - target);
+            if (closestDist === null || sumDist < closestDist) {
+                closest = sum;
+                closestDist = sumDist;
+            }
+            if (sum === target) {
+                l = r;
+            } else if (sum < target) {
+                l++;
+            } else if (sum > target) {
+                r--;
             }
         }
     }
