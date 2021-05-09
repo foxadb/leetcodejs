@@ -49,53 +49,42 @@
  * @return {boolean}
  */
 var isValidSudoku = function (board) {
-    let firstRule = true;
-    for (let i = 0; i < 9 && firstRule; ++i) {
-        const digits = {};
-        for (let j = 0; j < 9 && firstRule; ++j) {
+    const rowDigits = {};
+    const columnDigits = {};
+    const blockDigits = {};
+    for (let i = 0; i < 9; ++i) {
+        for (let j = 0; j < 9; ++j) {
             const digit = board[i][j];
             if (digit !== '.') {
-                if (digits[digit] === 1) {
-                    firstRule = false;
+                if (!rowDigits[i]) {
+                    rowDigits[i] = {};
+                }
+                if (rowDigits[i][digit]) {
+                    return false;
                 } else {
-                    digits[digit] = 1;
+                    rowDigits[i][digit] = true;
                 }
-            }
-        }
-    }
-    let secondRule = true;
-    for (let j = 0; j < 9 && secondRule; ++j) {
-        const digits = {};
-        for (let i = 0; i < 9 && secondRule; ++i) {
-            const digit = board[i][j];
-            if (digit !== '.') {
-                if (digits[digit] === 1) {
-                    secondRule = false;
+                if (!columnDigits[j]) {
+                    columnDigits[j] = {};
+                }
+                if (columnDigits[j][digit]) {
+                    return false;
                 } else {
-                    digits[digit] = 1;
+                    columnDigits[j][digit] = true;
+                }
+                const k = 3 * Math.floor(i / 3) + Math.floor(j / 3);
+                if (!blockDigits[k]) {
+                    blockDigits[k] = {};
+                }
+                if (blockDigits[k][digit]) {
+                    return false;
+                } else {
+                    blockDigits[k][digit] = true;
                 }
             }
         }
     }
-    let thirdRule = true;
-    for (let i = 0; i < 3 && thirdRule; ++i) {
-        for (let j = 0; j < 3 && thirdRule; ++j) {
-            const digits = {};
-            for (let k = 0; k < 3; ++k) {
-                for (let l = 0; l < 3; ++l) {
-                    const digit = board[3 * i + k][3 * j + l];
-                    if (digit !== '.') {
-                        if (digits[digit] === 1) {
-                            thirdRule = false;
-                        } else {
-                            digits[digit] = 1;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return firstRule && secondRule && thirdRule;
+    return true;
 };
 
 module.exports = { isValidSudoku };
