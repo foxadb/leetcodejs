@@ -24,19 +24,31 @@
  * @param {number} target
  * @return {number[]}
  */
-var searchRange = function(nums, target) {
-    let left = -1;
-    let right = -1;
-    for (let i = 0; i < nums.length; ++i) {
-        if (nums[i] === target) {
-            if (left === -1) {
-                left = i;
-            }
-            if (right === -1 || right < i) {
-                right = i;
-            }
+var searchRange = function (nums, target) {
+    let left = -1, right = -1;
+    let i = 0, j = nums.length - 1;
+    while (i < j) {
+        const k = Math.floor((i + j) / 2);
+        if (nums[k] < target) {
+            i = k + 1;
+        } else {
+            j = k;
         }
     }
+    if (nums[i] !== target) {
+        return [left, right];
+    }
+    left = i;
+    j = nums.length - 1;
+    while (i < j) {
+        const k = Math.floor((i + j) / 2) + 1;
+        if (nums[k] > target) {
+            j = k - 1;
+        } else {
+            i = k;
+        }
+    }
+    right = j;
     return [left, right];
 };
 
