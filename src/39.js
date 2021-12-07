@@ -44,8 +44,33 @@
  * @param {number} target
  * @return {number[][]}
  */
-var combinationSum = function (candidates, target) {
-    return [];
+var combinationSum = function(candidates, target) {
+    const results = [];
+    dfs(candidates, target, [], 0, results);
+	return results;
 };
+
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @param {number[]} combinaison
+ * @param {number} startIndex
+ * @param {number[][]} results
+ */
+var dfs = function(candidates, target, combinaison, startIndex, results) {
+    if (target === 0) {
+        results.push(combinaison);
+    } else if (target > 0) {
+        for (let i = startIndex; i < candidates.length; ++i) {
+            dfs(
+                candidates,
+                target - candidates[i],
+                combinaison.concat(candidates[i]),
+                i,
+                results
+            );
+        }
+    }
+}
 
 module.exports = { combinationSum };
