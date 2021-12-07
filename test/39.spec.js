@@ -10,7 +10,7 @@ describe('39. Combinaison Sum', () => {
 
     it('candidates = [2, 3, 5], target = 8', () => {
         const results = combinationSum([2, 3, 5], 8);
-        expect(results).toHaveLength(30);
+        expect(results).toHaveLength(3);
         expect(results).toContainEqual([2, 2, 2, 2]);
         expect(results).toContainEqual([2, 3, 3]);
         expect(results).toContainEqual([3, 5]);
@@ -24,7 +24,7 @@ describe('39. Combinaison Sum', () => {
     it('candidates = [1], target = 1', () => {
         const results = combinationSum([1], 1);
         expect(results).toHaveLength(1);
-        expect(results).toContain([1]);
+        expect(results).toContainEqual([1]);
     });
 
     it('candidates = [1], target = 2', () => {
